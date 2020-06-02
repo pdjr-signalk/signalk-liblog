@@ -8,7 +8,7 @@ into the Signal K dashboard and the host system logs.
 ```
 const Log = require("./lib/signalk-liblog/Log.js");
 
-const log = new Log(app.setProviderStatus, app.setProviderError, plugin.id);
+const log = new Log(plugin.id, { scallback: app.setProviderStatus, ecallback: app.setProviderError });
 
 log.N("server listening on UDP port");
 
@@ -17,5 +17,7 @@ log.E("server rejected invalid client", false);
 
 ## Constructor
 
-__Log(__*status-callback*, *error_callback*, *message-prefix*)
+__Log(*message-prefix* [, *options* ])__
+
+
 
