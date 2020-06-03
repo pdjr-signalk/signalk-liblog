@@ -1,31 +1,42 @@
 module.exports = class Log {
 
-    constructor(fstat, ferr, prefix) {
-        this.fstat = fstat;
-        this.ferr = ferr;
+    constructor(prefix, options={}) {
         this.prefix = prefix;
+        this.options = options;
+        if ((this.options.ncallback) && (!this.options.wcallback)) this.options.wcallback = this.options.ncallback;
+        if ((this.options.ncallback) && (!this.options.ecallback)) this.options.ecallback = this.options.ncallback;
     }
 
     N(message, toConsole = true) {
-        this.log(message, toConsole);
+        this.log(message, 0, toConsole);
     }
 
     W(message, toConsole = true) {
-        this.log(message, toConsole);
+        this.log(message, 1, toConsole);
     }
 
     E(message, toConsole = true) {
-        this.log(message, toConsole, true);
+        this.log(message, 2, toConsole);
     }
 
-    log(message, toConsole = true, toError = false) {
-        if (message !== undefined) {
+    log(message, type, toConsole) {
+        if (message) {
             // Always write message to syslog
-	        if (this.prefix !== undefined) console.log("%s: %s", this.prefix, message);
+	        console.log("%s:%s %s", (this.prefix)?this.prefix:"(undefined)", ["", "warning:", "error:"][type], message);
     
             if (toConsole) {
                 message = message.charAt(0).toUpperCase() + message.slice(1);
-	            if (!toError) { this.fstat(message); } else { this.ferr(message); }
+                switch (type) {
+                    case 0:
+                        if (options.ncallback) options.ncallback(message);
+                        break;
+                    case 1:
+                        if (options.wcallback) options.wcallback(message);
+                        break;
+                    case 2:
+                        if (options.ecallback) options.ecallback(message);
+                        break;
+                }
             }
         }
     }
