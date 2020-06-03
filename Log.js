@@ -28,13 +28,13 @@ module.exports = class Log {
                 message = message.charAt(0).toUpperCase() + message.slice(1);
                 switch (type) {
                     case 0:
-                        if (options.ncallback) options.ncallback(message);
+                        if (this.options.ncallback) this.options.ncallback(message);
                         break;
                     case 1:
-                        if (options.wcallback) options.wcallback(message);
+                        if (this.options.wcallback) this.options.wcallback(message);
                         break;
                     case 2:
-                        if (options.ecallback) options.ecallback(message);
+                        if (this.options.ecallback) this.options.ecallback(message);
                         break;
                 }
             }
