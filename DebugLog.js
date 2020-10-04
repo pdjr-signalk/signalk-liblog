@@ -6,7 +6,7 @@ module.exports = class DebugLog {
     }
 
     N(key, message, ...moreargs) {
-        if ((process.env.DEBUG) && (this.keys.includes(key))) {
+        if ((process.env.DEBUG) && ((this.keys.includes(key)) || (key == "*"))) {
             var debugKeys = process.env.DEBUG.split(/[\s+|,]/);
             if (debugKeys.includes(this.prefix + ":*") || debugKeys.includes(this.prefix + ":" + key)) { 
                 console.log(this.prefix + ":" + key + ": " + message, ...moreargs);
