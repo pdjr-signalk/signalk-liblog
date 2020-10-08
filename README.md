@@ -2,19 +2,39 @@
 
 Log system interface library for Signal K node plugins.
 
-Provides a small collection of methods suitable for writing messages
-into the Signal K dashboard and the host system logs.
+Provides two small classes.
 
+The Log class supports message logging to the Signal K dashboard and
+host system logs.
+
+The DebugLog class supports logging to the host system logs dependent
+upon the presence of debug keys in the environment DEBUG variable.
+
+## Using the Log class
 ```
-const Log = require("./lib/signalk-liblog/Log.js");
+const Log = require("signalk-liblog/Log.js");
 
-// Create new log instance, setting message prefix and normal and error callbacks.
+/**********************************************************************
+ * Create new log instance, setting the message prefix to be used for
+ * system log messages and 'normal' and 'error' callback functions that
+ * will be used to interface to the Signal K dashboard.
+ */
+
 const log = new Log(plugin.id, { ncallback: app.setProviderStatus, ecallback: app.setProviderError });
 
-// Issue a "normal" message to the system log and normal callback.
-log.N("server listening on UDP port");
+/**********************************************************************
+ * Issue a 'normal', 'warning' and 'error' messages to both the system
+ * log and through the Signal K dashboard callbacks.
+ */
 
-// Issue an "error" message to just the system log.
+log.N("server listening on UDP port %d", udpPort);
+log.W("using default UDP port %d", udpPort);
+log.E("error opening UDP port %d", udpPort);
+
+/**********************************************************************
+ * Issue an 'error' message to just the system log.
+ */
+
 log.E("server rejected invalid client", false);
 ```
 
