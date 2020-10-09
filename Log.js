@@ -14,6 +14,8 @@
  * permissions and limitations under the License.
  */
 
+sprintf = require("sprintf-js").sprintf;
+
 module.exports = class Log {
 
   constructor(prefix, options={}) {
@@ -45,13 +47,13 @@ module.exports = class Log {
         message = message.charAt(0).toUpperCase() + message.slice(1);
         switch (type) {
           case 0:
-            if (this.options.ncallback) this.options.ncallback(message);
+            if (this.options.ncallback) this.options.ncallback(sprintf(message, ...moreargs));
             break;
           case 1:
-            if (this.options.wcallback) this.options.wcallback(message);
+            if (this.options.wcallback) this.options.wcallback(sprintf(message, ...moreargs));
             break;
           case 2:
-            if (this.options.ecallback) this.options.ecallback(message);
+            if (this.options.ecallback) this.options.ecallback(sprintf(message, ...moreargs));
             break;
         }
       }
