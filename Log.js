@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-sprintf = require("sprintf-js").sprintf;
+const sprintf = require("sprintf-js").sprintf;
 
 module.exports = class Log {
 
