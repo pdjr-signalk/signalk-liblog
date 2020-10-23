@@ -12,14 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * permissions and limitations under the License.
- *
- * DebugLog interfaces the host application with debug  keys matching
- * the style of the npm debug library. The class circumvents some
- * restrictions in the Signal K use of debug.
- *
- * Debug keys have the form prefix:key where prefix will normally be
- * the name of the host Signal K plugin and key is the name of a
- * specific debug key, or "*" to indicate all keys.
  */
 
 module.exports = class DebugLog {
