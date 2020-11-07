@@ -34,13 +34,18 @@ module.exports = class DebugLog {
    */
 
   N(key, message, ...moreargs) {
+    if (this.enabled(key)) console.log(this.prefix + ":" + key + ": " + message, ...moreargs);
+  }
+
+  enabled(key) {
+    var retval = false;
     if ((process.env.DEBUG) && ((this.keys.includes(key)) || (key == "*"))) {
       var debugKeys = process.env.DEBUG.split(/[\s+|,]/);
-      if (debugKeys.includes(this.prefix + ":*") || debugKeys.includes(this.prefix + ":" + key)) { 
-        console.log(this.prefix + ":" + key + ": " + message, ...moreargs);
-      }
+      retval = (debugKeys.includes(this.prefix + ":*") || debugKeys.includes(this.prefix + ":" + key));
     }
+    return(retval); 
   }
+
 
   /********************************************************************
    * Return the <prefix> that was passed to the constructor.
