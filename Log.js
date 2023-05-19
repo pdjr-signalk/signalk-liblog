@@ -41,11 +41,11 @@ module.exports = class Log {
     if (message) {
       var parsedMessage = sprintf(message, ...moreargs);
       // Always write message to syslog
-      console.log("%s:%s %s", (this.prefix)?this.prefix:"(undefined)", ["", "warning:", "error:"][type], parsedMessage);
+      console.log("%s:%s %s", (this.prefix)?this.prefix:"(undefined)", ["", " warning:", " error:"][type], parsedMessage);
       var toConsole = ((!moreargs.length) || (moreargs.length == 0))?true:(moreargs[moreargs.length - 1]);
     
       if (toConsole) {
-        message = message.charAt(0).toUpperCase() + message.slice(1);
+        parsedMessage = parsedMessage.charAt(0).toUpperCase() + parsedMessage.slice(1);
         switch (type) {
           case 0:
             if (this.options.ncallback) this.options.ncallback(parsedMessage);
