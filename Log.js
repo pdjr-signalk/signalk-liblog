@@ -42,7 +42,7 @@ module.exports = class Log {
       var parsedMessage = sprintf(message, ...moreargs);
       // Always write message to syslog
       console.log("%s:%s %s", (this.prefix)?this.prefix:"(undefined)", ["", " warning:", " error:"][type], parsedMessage);
-      var toConsole = ((!moreargs.length) || (moreargs.length == 0))?true:(moreargs[moreargs.length - 1]);
+      var toConsole = ((moreargs.length === 0))?true:(moreargs[moreargs.length - 1] === true);
     
       if (toConsole) {
         parsedMessage = parsedMessage.charAt(0).toUpperCase() + parsedMessage.slice(1);
